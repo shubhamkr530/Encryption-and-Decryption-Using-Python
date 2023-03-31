@@ -1,0 +1,69 @@
+from tkinter import *
+import base64
+
+root = Tk()
+root.geometry("500x300")
+root.resizable(0, 0)
+root.title("Message Encode and Decode")
+
+
+# Function to encode
+def encode():
+    message = e1.get()
+    message = message.encode('ascii')
+    base64_bytes = base64.b64encode(message)
+    base64_message = base64_bytes.decode('ascii')
+    e2.insert(0, base64_message)
+
+
+# Function to decode
+def decode():
+    message = e3.get()
+    base64_bytes = message.encode('ascii')
+    message_bytes = base64.b64decode(base64_bytes)
+    original_message = message_bytes.decode('ascii')
+    e4.insert(0, original_message)
+
+
+# Function to clear entry fields
+def clear():
+    e1.delete(0, END)
+    e2.delete(0, END)
+    e3.delete(0, END)
+    e4.delete(0, END)
+
+
+# Function to exit program
+def exit_program():
+    root.destroy()
+
+
+# GUI Design
+def main_screen():
+    Label(root, text="ENCODE AND DECODE MESSAGES", font=("arial", 15, "bold"), fg="#ed3833").pack()
+    Label(root, text="Encode your message:", font=("arial", 10, "bold")).place(x=20, y=50)
+    Label(root, text="Encoded Message:", font=("arial", 10, "bold")).place(x=20, y=110)
+    Label(root, text="Decode your message:", font=("arial", 10, "bold")).place(x=20, y=170)
+    Label(root, text="Decoded Message:", font=("arial", 10, "bold")).place(x=20, y=230)
+
+    global e1, e2, e3, e4
+    e1 = Entry(root, font=("arial", 10), width=30, bd=2, relief=SOLID)
+    e1.place(x=200, y=50)
+
+    e2 = Entry(root, font=("arial", 10), width=30, bd=2, relief=SOLID)
+    e2.place(x=200, y=110)
+
+    e3 = Entry(root, font=("arial", 10), width=30, bd=2, relief=SOLID)
+    e3.place(x=200, y=170)
+
+    e4 = Entry(root, font=("arial", 10), width=30, bd=2, relief=SOLID)
+    e4.place(x=200, y=230)
+
+    Button(text="ENCODE", height="2", width=23, bg="#ed3833", fg="white", bd=0, command=encode).place(x=10, y=90)
+    Button(text="DECODE", height="2", width=23, bg="#ed3833", fg="white", bd=0, command=decode).place(x=10, y=200)
+    Button(text="CLEAR", height="2", width=10, bg="black", fg="white", bd=0, command=clear).place(x=230, y=270)
+    Button(text="EXIT", height="2", width=10, bg="black", fg="white", bd=0, command=exit_program).place(x=330, y=270)
+
+    root.mainloop()
+
+main_screen()
